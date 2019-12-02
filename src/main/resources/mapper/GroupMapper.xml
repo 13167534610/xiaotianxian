@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.my.dao.GroupMapper">
+  <resultMap id="BaseResultMap" type="com.my.entity.Group">
+    <id column="GID" jdbcType="VARCHAR" property="gid" />
+    <result column="GNAME" jdbcType="VARCHAR" property="gname" />
+    <result column="INTRODUCE" jdbcType="VARCHAR" property="introduce" />
+    <result column="ICO" jdbcType="VARCHAR" property="ico" />
+    <result column="MAXCOUNT" jdbcType="INTEGER" property="maxcount" />
+    <result column="CURRENTCOUNT" jdbcType="INTEGER" property="currentcount" />
+    <result column="MAXMANAGERCOUNT" jdbcType="INTEGER" property="maxmanagercount" />
+    <result column="MANAGERCOUNT" jdbcType="INTEGER" property="managercount" />
+    <result column="ACTIVE" jdbcType="VARCHAR" property="active" />
+    <result column="CREATEUSER" jdbcType="VARCHAR" property="createuser" />
+    <result column="CREATETIME" jdbcType="TIMESTAMP" property="createtime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    GID, GNAME, INTRODUCE, ICO, MAXCOUNT, CURRENTCOUNT, MAXMANAGERCOUNT, MANAGERCOUNT, 
+    ACTIVE, CREATEUSER, CREATETIME
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from "c_group"
+    where GID = #{gid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from "c_group"
+    where GID = #{gid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.my.entity.Group">
+    insert into "c_group" (GID, GNAME, INTRODUCE, 
+      ICO, MAXCOUNT, CURRENTCOUNT, 
+      MAXMANAGERCOUNT, MANAGERCOUNT, ACTIVE, 
+      CREATEUSER, CREATETIME)
+    values (#{gid,jdbcType=VARCHAR}, #{gname,jdbcType=VARCHAR}, #{introduce,jdbcType=VARCHAR}, 
+      #{ico,jdbcType=VARCHAR}, #{maxcount,jdbcType=INTEGER}, #{currentcount,jdbcType=INTEGER}, 
+      #{maxmanagercount,jdbcType=INTEGER}, #{managercount,jdbcType=INTEGER}, #{active,jdbcType=VARCHAR}, 
+      #{createuser,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.my.entity.Group">
+    insert into "c_group"
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="gid != null">
+        GID,
+      </if>
+      <if test="gname != null">
+        GNAME,
+      </if>
+      <if test="introduce != null">
+        INTRODUCE,
+      </if>
+      <if test="ico != null">
+        ICO,
+      </if>
+      <if test="maxcount != null">
+        MAXCOUNT,
+      </if>
+      <if test="currentcount != null">
+        CURRENTCOUNT,
+      </if>
+      <if test="maxmanagercount != null">
+        MAXMANAGERCOUNT,
+      </if>
+      <if test="managercount != null">
+        MANAGERCOUNT,
+      </if>
+      <if test="active != null">
+        ACTIVE,
+      </if>
+      <if test="createuser != null">
+        CREATEUSER,
+      </if>
+      <if test="createtime != null">
+        CREATETIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="gid != null">
+        #{gid,jdbcType=VARCHAR},
+      </if>
+      <if test="gname != null">
+        #{gname,jdbcType=VARCHAR},
+      </if>
+      <if test="introduce != null">
+        #{introduce,jdbcType=VARCHAR},
+      </if>
+      <if test="ico != null">
+        #{ico,jdbcType=VARCHAR},
+      </if>
+      <if test="maxcount != null">
+        #{maxcount,jdbcType=INTEGER},
+      </if>
+      <if test="currentcount != null">
+        #{currentcount,jdbcType=INTEGER},
+      </if>
+      <if test="maxmanagercount != null">
+        #{maxmanagercount,jdbcType=INTEGER},
+      </if>
+      <if test="managercount != null">
+        #{managercount,jdbcType=INTEGER},
+      </if>
+      <if test="active != null">
+        #{active,jdbcType=VARCHAR},
+      </if>
+      <if test="createuser != null">
+        #{createuser,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.my.entity.Group">
+    update "c_group"
+    <set>
+      <if test="gname != null">
+        GNAME = #{gname,jdbcType=VARCHAR},
+      </if>
+      <if test="introduce != null">
+        INTRODUCE = #{introduce,jdbcType=VARCHAR},
+      </if>
+      <if test="ico != null">
+        ICO = #{ico,jdbcType=VARCHAR},
+      </if>
+      <if test="maxcount != null">
+        MAXCOUNT = #{maxcount,jdbcType=INTEGER},
+      </if>
+      <if test="currentcount != null">
+        CURRENTCOUNT = #{currentcount,jdbcType=INTEGER},
+      </if>
+      <if test="maxmanagercount != null">
+        MAXMANAGERCOUNT = #{maxmanagercount,jdbcType=INTEGER},
+      </if>
+      <if test="managercount != null">
+        MANAGERCOUNT = #{managercount,jdbcType=INTEGER},
+      </if>
+      <if test="active != null">
+        ACTIVE = #{active,jdbcType=VARCHAR},
+      </if>
+      <if test="createuser != null">
+        CREATEUSER = #{createuser,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        CREATETIME = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where GID = #{gid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.my.entity.Group">
+    update "c_group"
+    set GNAME = #{gname,jdbcType=VARCHAR},
+      INTRODUCE = #{introduce,jdbcType=VARCHAR},
+      ICO = #{ico,jdbcType=VARCHAR},
+      MAXCOUNT = #{maxcount,jdbcType=INTEGER},
+      CURRENTCOUNT = #{currentcount,jdbcType=INTEGER},
+      MAXMANAGERCOUNT = #{maxmanagercount,jdbcType=INTEGER},
+      MANAGERCOUNT = #{managercount,jdbcType=INTEGER},
+      ACTIVE = #{active,jdbcType=VARCHAR},
+      CREATEUSER = #{createuser,jdbcType=VARCHAR},
+      CREATETIME = #{createtime,jdbcType=TIMESTAMP}
+    where GID = #{gid,jdbcType=VARCHAR}
+  </update>
+</mapper>

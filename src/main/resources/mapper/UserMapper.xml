@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.my.dao.UserMapper">
+  <resultMap id="userMap" type="com.my.entity.User">
+    <id column="UID" jdbcType="VARCHAR" property="uid" />
+    <result column="NICKNAME" jdbcType="VARCHAR" property="nickname" />
+    <result column="PASSWORD" jdbcType="VARCHAR" property="password" />
+    <result column="REALNAME" jdbcType="VARCHAR" property="realname" />
+    <result column="STAR" jdbcType="VARCHAR" property="star" />
+    <result column="ONLINE" jdbcType="VARCHAR" property="online" />
+    <result column="SEX" jdbcType="VARCHAR" property="sex" />
+    <result column="PHONE" jdbcType="VARCHAR" property="phone" />
+    <result column="MAILADDRESS" jdbcType="VARCHAR" property="mailaddress" />
+    <result column="ROLE" jdbcType="VARCHAR" property="role" />
+    <result column="LEV" jdbcType="VARCHAR" property="lev" />
+    <result column="CREATETIME" jdbcType="TIMESTAMP" property="createtime" />
+  </resultMap>
+  <sql id="userColumn">
+    UID, NICKNAME, PASSWORD, REALNAME, STAR, ONLINE, SEX, PHONE, MAILADDRESS, ROLE, LEV, 
+    CREATETIME
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="userMap">
+    select 
+    <include refid="userColumn" />
+    from c_user
+    where UID = #{uid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByNickName" parameterType="java.lang.String" resultMap="userMap">
+    select
+    <include refid="userColumn" />
+    from c_user
+    where NICKNAME = #{nickName,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from c_user
+    where UID = #{uid,jdbcType=VARCHAR}
+  </delete>
+  
+  <update id="modifyOnline">
+    update c_user set online = #{online} where uid = #{uid}
+  </update>
+
+  <select id="getFriends" parameterType="java.lang.String" resultType="com.my.entity.User">
+    select
+    a.uid, a.nickName, a.star, a.online
+    from c_user a
+    LEFT JOIN uu_relation b ON a.uid = b.fid
+    where b.uid = #{uid,jdbcType=VARCHAR}
+  </select>
+  
+  <insert id="insert" parameterType="com.my.entity.User">
+    insert into c_user (UID, NICKNAME, PASSWORD, 
+      REALNAME, STAR, ONLINE, 
+      SEX, PHONE, MAILADDRESS, 
+      ROLE, LEV, CREATETIME
+      )
+    values (#{uid,jdbcType=VARCHAR}, #{nickname,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{realname,jdbcType=VARCHAR}, #{star,jdbcType=VARCHAR}, #{online,jdbcType=VARCHAR}, 
+      #{sex,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{mailaddress,jdbcType=VARCHAR}, 
+      #{role,jdbcType=VARCHAR}, #{lev,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.my.entity.User">
+    insert into c_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="uid != null">
+        UID,
+      </if>
+      <if test="nickname != null">
+        NICKNAME,
+      </if>
+      <if test="password != null">
+        PASSWORD,
+      </if>
+      <if test="realname != null">
+        REALNAME,
+      </if>
+      <if test="star != null">
+        STAR,
+      </if>
+      <if test="online != null">
+        ONLINE,
+      </if>
+      <if test="sex != null">
+        SEX,
+      </if>
+      <if test="phone != null">
+        PHONE,
+      </if>
+      <if test="mailaddress != null">
+        MAILADDRESS,
+      </if>
+      <if test="role != null">
+        ROLE,
+      </if>
+      <if test="lev != null">
+        LEV,
+      </if>
+      <if test="createtime != null">
+        CREATETIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="uid != null">
+        #{uid,jdbcType=VARCHAR},
+      </if>
+      <if test="nickname != null">
+        #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="realname != null">
+        #{realname,jdbcType=VARCHAR},
+      </if>
+      <if test="star != null">
+        #{star,jdbcType=VARCHAR},
+      </if>
+      <if test="online != null">
+        #{online,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="mailaddress != null">
+        #{mailaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="role != null">
+        #{role,jdbcType=VARCHAR},
+      </if>
+      <if test="lev != null">
+        #{lev,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.my.entity.User">
+    update c_user
+    <set>
+      <if test="nickname != null">
+        NICKNAME = #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        PASSWORD = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="realname != null">
+        REALNAME = #{realname,jdbcType=VARCHAR},
+      </if>
+      <if test="star != null">
+        STAR = #{star,jdbcType=VARCHAR},
+      </if>
+      <if test="online != null">
+        ONLINE = #{online,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        SEX = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        PHONE = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="mailaddress != null">
+        MAILADDRESS = #{mailaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="role != null">
+        ROLE = #{role,jdbcType=VARCHAR},
+      </if>
+      <if test="lev != null">
+        LEV = #{lev,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        CREATETIME = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where UID = #{uid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.my.entity.User">
+    update c_user
+    set NICKNAME = #{nickname,jdbcType=VARCHAR},
+      PASSWORD = #{password,jdbcType=VARCHAR},
+      REALNAME = #{realname,jdbcType=VARCHAR},
+      STAR = #{star,jdbcType=VARCHAR},
+      ONLINE = #{online,jdbcType=VARCHAR},
+      SEX = #{sex,jdbcType=VARCHAR},
+      PHONE = #{phone,jdbcType=VARCHAR},
+      MAILADDRESS = #{mailaddress,jdbcType=VARCHAR},
+      ROLE = #{role,jdbcType=VARCHAR},
+      LEV = #{lev,jdbcType=VARCHAR},
+      CREATETIME = #{createtime,jdbcType=TIMESTAMP}
+    where UID = #{uid,jdbcType=VARCHAR}
+  </update>
+</mapper>

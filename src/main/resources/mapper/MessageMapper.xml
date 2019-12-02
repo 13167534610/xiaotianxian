@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.my.dao.MessageMapper">
+  <resultMap id="BaseResultMap" type="com.my.entity.Message">
+    <id column="MID" jdbcType="INTEGER" property="mid" />
+    <result column="FROMTARGET" jdbcType="VARCHAR" property="fromtarget" />
+    <result column="TOTARGET" jdbcType="VARCHAR" property="totarget" />
+    <result column="TYPE" jdbcType="VARCHAR" property="type" />
+    <result column="CREATETIME" jdbcType="TIMESTAMP" property="createtime" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.my.entity.Message">
+    <result column="CONTENT" jdbcType="LONGVARBINARY" property="content" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    MID, FROMTARGET, TOTARGET, TYPE, CREATETIME
+  </sql>
+  <sql id="Blob_Column_List">
+    CONTENT
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    from c_message
+    where MID = #{mid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from c_message
+    where MID = #{mid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.my.entity.Message">
+    insert into c_message (MID, FROMTARGET, TOTARGET, 
+      TYPE, CREATETIME, CONTENT
+      )
+    values (#{mid,jdbcType=INTEGER}, #{fromtarget,jdbcType=VARCHAR}, #{totarget,jdbcType=VARCHAR}, 
+      #{type,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, #{content,jdbcType=LONGVARBINARY}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.my.entity.Message">
+    insert into c_message
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="fromtarget != null">
+        FROMTARGET,
+      </if>
+      <if test="totarget != null">
+        TOTARGET,
+      </if>
+      <if test="type != null">
+        TYPE,
+      </if>
+      <if test="createtime != null">
+        CREATETIME,
+      </if>
+      <if test="content != null">
+        CONTENT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="fromtarget != null">
+        #{fromtarget,jdbcType=VARCHAR},
+      </if>
+      <if test="totarget != null">
+        #{totarget,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=LONGVARBINARY},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.my.entity.Message">
+    update c_message
+    <set>
+      <if test="fromtarget != null">
+        FROMTARGET = #{fromtarget,jdbcType=VARCHAR},
+      </if>
+      <if test="totarget != null">
+        TOTARGET = #{totarget,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        TYPE = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        CREATETIME = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null">
+        CONTENT = #{content,jdbcType=LONGVARBINARY},
+      </if>
+    </set>
+    where MID = #{mid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.my.entity.Message">
+    update c_message
+    set FROMTARGET = #{fromtarget,jdbcType=VARCHAR},
+      TOTARGET = #{totarget,jdbcType=VARCHAR},
+      TYPE = #{type,jdbcType=VARCHAR},
+      CREATETIME = #{createtime,jdbcType=TIMESTAMP},
+      CONTENT = #{content,jdbcType=LONGVARBINARY}
+    where MID = #{mid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.my.entity.Message">
+    update c_message
+    set FROMTARGET = #{fromtarget,jdbcType=VARCHAR},
+      TOTARGET = #{totarget,jdbcType=VARCHAR},
+      TYPE = #{type,jdbcType=VARCHAR},
+      CREATETIME = #{createtime,jdbcType=TIMESTAMP}
+    where MID = #{mid,jdbcType=INTEGER}
+  </update>
+</mapper>
